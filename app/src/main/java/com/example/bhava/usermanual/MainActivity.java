@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 异步读取网络图片
+     * 异步任务
      * @author hellogv
      */
     class AsyncWorkTask extends AsyncTask<Object,Object,Void> {
