@@ -1,22 +1,19 @@
 package com.example.bhava.usermanual;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 import java.io.File;
-
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(result==null){
             Looper.prepare();
-            Toast.makeText(MainActivity.this,
-                    "Can't find the file, find the position "+dir+fileName,
-                    Toast.LENGTH_SHORT).show();
+            showErroDialog("Can't find the file, find the position "+dir+fileName);
             Looper.loop();
         }
         return result;
@@ -110,5 +105,28 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    protected void showErroDialog(String msg) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Erro!!!");
+
+        builder.setMessage(msg);
+
+        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                finish();
+                System.exit(0);
+
+            }
+        });
+
+        builder.create().show();
     }
 }
