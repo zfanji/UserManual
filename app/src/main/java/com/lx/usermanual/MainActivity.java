@@ -1,4 +1,4 @@
-package com.example.bhava.usermanual;
+package com.lx.usermanual;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
