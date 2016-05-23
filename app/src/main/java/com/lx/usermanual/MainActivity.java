@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         String fileName = "UserManual_"+getCurrentLanguage()+".pdf";
         new AsyncWorkTask().execute(new Object[] {fileName});
+
     }
 
     /**
@@ -80,16 +81,29 @@ public class MainActivity extends AppCompatActivity {
 
     private Uri searchFile(String dir, String fileName) {
         Uri result=null;
+        boolean findOK=false;
         File[] files = new File(dir).listFiles();
         for (File f : files) {
             Log.d(TAG,"list: "+f.toString());
             if(f.getName().indexOf(fileName)>=0){
                 result = Uri.fromFile(f);
+                findOK=true;
             }
         }
+        //查找默认
+        if(findOK==false) {
+            for (File f : files) {
+                Log.d(TAG, "list: " + f.toString());
+                if (f.getName().indexOf("UserManual_default.pdf") >= 0) {
+                    result = Uri.fromFile(f);
+                    findOK = true;
+                }
+            }
+        }
+
         if(result==null){
             Looper.prepare();
-            showErroDialog("Can't find the file, find the position "+dir+fileName);
+            showErroDialog("Can't find the file, find the position: "+dir+"/"+fileName);
             Looper.loop();
         }
         return result;
